@@ -8,7 +8,7 @@ def get_employee(db: Session, emp_id: int):
     return (
         db
         .query(models.Employee)
-        .filter(models.Employee.id == empi_id)
+        .filter(models.Employee.id == emp_id)
         .first()
     )
 

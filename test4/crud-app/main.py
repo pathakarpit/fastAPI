@@ -20,7 +20,7 @@ def get_db():
 # 1 create an employee
 @app.post('/employees', response_model=schemas.EmployeeOut)
 def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
-    crud.create_employee(db, employee)
+    return crud.create_employee(db, employee)
 
 # 2 get all emplyoees
 @app.get('/employees', response_model=List[schemas.EmployeeOut])
@@ -40,12 +40,12 @@ def get_employee(emp_id: int, db: Session = Depends(get_db)):
 @app.put('/employee/{emp_id}', response_model=schemas.EmployeeOut)
 def update_employee(emp_id: int, employee: schemas.EmployeeUpdate, db: Session = Depends(get_db)):
     db_employee = crud.update_employee(db, emp_id, employee)
-    if employee is None:
+    if db_employee is None:
         raise HTTPException(status_code=404, detail='your Mom Not Found')
     return db_employee
 
 # 5 delete employee
-@app.delete('/emplyoee/{emp_id}')
+@app.delete('/employee/{emp_id}')
 def delete_employee(emp_id: int, db: Session = Depends(get_db)):
     employee = crud.delete_employee(db, emp_id)
     if employee is None:
